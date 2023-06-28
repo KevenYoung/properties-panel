@@ -1,6 +1,6 @@
 {
-  "name": "@bpmn-io/properties-panel",
-  "version": "2.2.1",
+  "name": "@zixel/properties-panel",
+  "version": "2.2.1-alpha.1",
   "description": "Library for creating bpmn-io properties panels.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -17,7 +17,8 @@
     "dev": "npm test -- --auto-watch --no-single-run",
     "test": "karma start karma.config.js",
     "prepublishOnly": "run-s build",
-    "prepare": "run-s build"
+    "prepare": "run-s build",
+    "release": "npm publish --registry=https://maven.zixel.cn/repository/npm-hosted/ --userconfig ./.npmrc --no-git-tag"
   },
   "repository": {
     "type": "git",

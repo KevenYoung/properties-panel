@@ -16,6 +16,8 @@ import {
   useShowEntryEvent
 } from '../../hooks';
 
+import { getEventTarget } from '../../utils';
+
 function Textfield(props) {
 
   const {
@@ -34,12 +36,15 @@ function Textfield(props) {
   const ref = useShowEntryEvent(id);
 
   const handleInputCallback = useMemo(() => {
-    return debounce(({ target }) => onInput(target.value.length ? target.value : undefined));
+    return debounce((target) => {
+      onInput(target.value.length ? target.value : undefined);
+    });
   }, [ onInput, debounce ]);
 
   const handleInput = e => {
-    handleInputCallback(e);
-    setLocalValue(e.target.value);
+    const target = getEventTarget(e);
+    handleInputCallback(target);
+    setLocalValue(target.value);
   };
 
   useEffect(() => {

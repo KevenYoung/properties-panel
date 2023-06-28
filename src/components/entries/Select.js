@@ -14,6 +14,7 @@ import {
 } from 'preact/hooks';
 
 import Description from './Description';
+import { getEventTarget } from '../../utils';
 
 /**
  * @typedef { { value: string, label: string, disabled: boolean, children: { value: string, label: string, disabled: boolean } } } Option
@@ -49,13 +50,14 @@ function Select(props) {
 
   const [ localValue, setLocalValue ] = useState(value);
 
-  const handleChangeCallback = ({ target }) => {
+  const handleChangeCallback = (target) => {
     onChange(target.value);
   };
 
   const handleChange = e => {
-    handleChangeCallback(e);
-    setLocalValue(e.target.value);
+    const target = getEventTarget(e);
+    handleChangeCallback(target);
+    setLocalValue(target.value);
   };
 
   useEffect(() => {

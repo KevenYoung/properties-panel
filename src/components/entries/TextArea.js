@@ -16,6 +16,7 @@ import {
 } from '../../hooks';
 
 import { isFunction } from 'min-dash';
+import { getEventTarget } from '../../utils';
 
 function resizeToContents(element) {
   element.style.height = 'auto';
@@ -46,15 +47,17 @@ function TextArea(props) {
   const ref = useShowEntryEvent(id);
 
   const handleInputCallback = useMemo(() => {
-    return debounce(({ target }) => onInput(target.value.length ? target.value : undefined));
+    return debounce((target) => {
+      onInput(target.value.length ? target.value : undefined);
+    });
   }, [ onInput, debounce ]);
 
   const handleInput = e => {
-    handleInputCallback(e);
+    const target = getEventTarget(e);
+    handleInputCallback(target);
+    autoResize && resizeToContents(target);
 
-    autoResize && resizeToContents(e.target);
-
-    setLocalValue(e.target.value);
+    setLocalValue(target.value);
   };
 
   useLayoutEffect(() => {

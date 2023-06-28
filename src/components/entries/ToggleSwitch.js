@@ -6,6 +6,7 @@ import {
 } from 'preact/hooks';
 
 import classNames from 'classnames';
+import { getEventTarget } from '../../utils';
 
 export function ToggleSwitch(props) {
   const {
@@ -27,8 +28,9 @@ export function ToggleSwitch(props) {
   };
 
   const handleInput = e => {
-    handleInputCallback(e);
-    setLocalValue(e.target.value);
+    const target = getEventTarget(e);
+    handleInputCallback(target);
+    setLocalValue(target.value);
   };
 
   useEffect(() => {

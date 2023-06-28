@@ -9,6 +9,7 @@ import {
 } from 'preact/hooks';
 
 import Description from './Description';
+import { getEventTarget } from '../../utils';
 
 function Checkbox(props) {
   const {
@@ -23,13 +24,14 @@ function Checkbox(props) {
 
   const [ localValue, setLocalValue ] = useState(value);
 
-  const handleChangeCallback = ({ target }) => {
+  const handleChangeCallback = (target) => {
     onChange(target.checked);
   };
 
   const handleChange = e => {
-    handleChangeCallback(e);
-    setLocalValue(e.target.value);
+    const target = getEventTarget(e);
+    handleChangeCallback(target);
+    setLocalValue(target.value);
   };
 
   useEffect(() => {

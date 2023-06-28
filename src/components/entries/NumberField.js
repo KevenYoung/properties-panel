@@ -14,6 +14,7 @@ import {
   useError,
   usePrevious
 } from '../../hooks';
+import { getEventTarget } from '../../utils';
 
 export function NumberField(props) {
 
@@ -36,12 +37,11 @@ export function NumberField(props) {
   const [ localValue, setLocalValue ] = useState(value);
 
   const handleInputCallback = useMemo(() => {
-    return debounce(event => {
-
+    return debounce(target => {
       const {
         validity,
         value
-      } = event.target;
+      } = target;
 
       if (validity.valid) {
         onInput(value ? parseFloat(value) : undefined);
@@ -50,8 +50,9 @@ export function NumberField(props) {
   }, [ onInput, debounce ]);
 
   const handleInput = e => {
-    handleInputCallback(e);
-    setLocalValue(e.target.value);
+    const target = getEventTarget(e);
+    handleInputCallback(target);
+    setLocalValue(target.value);
   };
 
   useEffect(() => {
